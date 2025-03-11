@@ -1,7 +1,16 @@
 {
   "name": "vite-plugin-html-security",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
+  "author": "zys8119",
+  "description": "vite plugin for html security",
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "html-security"
+  ],
+  "homepage": "https://github.com/zys8119/vite-plugin-html-security",
+  "repository": "https://github.com/zys8119/vite-plugin-html-security.git",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

@@ -1,23 +1,21 @@
-# Rslib project
+# vite-plugin-html-security
 
-## Setup
+网站安全插件
 
-Install the dependencies:
-
+## 安装
 ```bash
-pnpm install
+npm i vite-plugin-html-security -D
 ```
 
-## Get started
-
-Build the library:
-
-```bash
-pnpm build
-```
-
-Build the library in watch mode:
-
-```bash
-pnpm dev
+## 使用
+```typescript
+import { defineConfig } from 'vite'
+import htmlSecurity from 'vite-plugin-html-security'
+export default defineConfig({
+  plugins: [
+    htmlSecurity({
+      // 配置项
+    })
+  ]
+})  
 ```

@@ -2,7 +2,7 @@ import { Plugin } from "vite";
 import { createHash } from "crypto";
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
-import { template } from "lodash";
+import { template, merge } from "lodash";
 const sriAssetsMap: Array<{
   filePath: string;
   path: string;
@@ -21,14 +21,23 @@ function getSRIHash(filePath: string): string | null {
     return null;
   }
 }
-export default function (): Plugin {
+type Options = {
+  outputDir?: string;
+};
+export default function (options: Options): Plugin {
+  const config = merge(
+    {
+      outputDir: "dist",
+    },
+    options
+  );
   return {
     name: "vite-plugin-sri",
     apply: "build",
     enforce: "post",
     closeBundle() {
       sriAssetsMap.forEach((item) => {
-        const htmlPath = join(process.cwd(), "dist", item.path);
+        const htmlPath = join(process.cwd(), config.outputDir, item.path);
         const sriHash = getSRIHash(
           /node_modules/.test(item.filePath)
             ? join(
@@ -61,7 +70,7 @@ export default function (): Plugin {
           (match, tag, before, attr, quoteWrappedUrl, url1, url2) => {
             const url = (url1 || url2 || "").replace(/^(\.|\/)+/, "");
             const asset = Object.values(bundle).find((b) => b.fileName === url);
-            const filePath = join(process.cwd(), "dist", url);
+            const filePath = join(process.cwd(), config.outputDir, url);
             sriAssetsMap.push({
               filePath,
               asset: !!asset,
